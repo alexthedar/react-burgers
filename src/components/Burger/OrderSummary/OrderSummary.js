@@ -1,6 +1,6 @@
 import React from 'react';
 
-const backdrop = () => {
+const orderSummary = () => {
   return (
     <div>
       
@@ -8,4 +8,4 @@ const backdrop = () => {
   );
 };
 
-export default backdrop;
+export default orderSummary;
