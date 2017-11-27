@@ -17,16 +17,17 @@ class BurgerBuilder extends Component {
       salad: 0,
       bacon: 0,
       cheese: 0,
-      meat: 1
+      meat: 0
     },
     totalPrice: 4
   }
 
   addIngredientHandler = (type) => {
+    console.log(this.state)
     const oldCount = this.state.ingredients[type];
     const updatedCount = oldCount + 1;
     const updatedIngredients = {
-      ...this.props.ingredients
+      ...this.state.ingredients
     };
     updatedIngredients[type] = updatedCount;
     const priceAddition = INGREDIENT_PRICES[type];
