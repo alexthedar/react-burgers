@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
 import { createStore } from 'redux';
+import thunk from 'redux-thunk';
 
 import burgerBuilderReducer from './store/reducers/burgerBuilder';
 import './index.css';
