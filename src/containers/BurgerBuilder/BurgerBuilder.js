@@ -1,12 +1,12 @@
 import React , {Component} from 'react';
 import { connect } from 'react-redux';
 
+import axios from '../../axios-order';
 import Aux from '../../hoc/Aux/Aux';
 import Burger from '../../components/Burger/Burger';
 import BuildControls from '../../components/Burger/BuildControls/BuildControls';
 import Modal from '../../components/UI/Modal/Modal';
 import OrderSummary from '../../components/Burger/OrderSummary/OrderSummary';
-import axios from '../../axios-order';
 import Spinner from '../../components/UI/Spinner/Spinner';
 import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
 import * as burgerBuilderActions from '../../store/actions/index';
@@ -16,21 +16,11 @@ import * as burgerBuilderActions from '../../store/actions/index';
 class BurgerBuilder extends Component {
 
   state = {
-    purchasing: false,
-    loading: false,
-    error: false
+    purchasing: false
   }
 
   componentDidMount () {
-    axios.get('https://react-my-burger-alexthedar.firebaseio.com/ingredients.json')
-      .then(res => {
-        this.setState({
-          ingredients: res.data
-        });
-      })
-      .catch(err => {
-        this.setState({error: true});
-      });
+    this.props.onInitIngredients();
   }
 
   updatePurchaseState (ingredients) {
@@ -67,7 +57,7 @@ class BurgerBuilder extends Component {
 
     let orderSummary =null;
 
-    let burger = this.state.error ? <p>Error loading ingredients.</p> : <Spinner />;
+    let burger = this.props.error ? <p>Error loading ingredients.</p> : <Spinner />;
     if (this.props.ings) {
       burger = (
         <Aux>
@@ -90,10 +80,6 @@ class BurgerBuilder extends Component {
       );
     }
 
-    if (this.state.loading){
-      orderSummary = <Spinner />;
-    }
-
     return (
       <Aux>
       <Modal 
@@ -110,7 +96,8 @@ class BurgerBuilder extends Component {
 const mapStateToProps = state => {
   return {
     ings: state.ingredients,
-    price: state.totalPrice
+    price: state.totalPrice,
+    error: state.error
   };
 };
 
@@ -121,7 +108,8 @@ const mapDispatchToProps = dispatch => {
     ),
     onIngredientRemoved: (ingName) => dispatch( 
       burgerBuilderActions.removeIngredient(ingName) 
-    )
+    ),
+    onInitIngredients: () => dispatch(burgerBuilderActions.initIngredients())
   };
 };
 
