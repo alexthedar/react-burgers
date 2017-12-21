@@ -19,7 +19,8 @@ export const removeIngredient = (name) => {
 export const setIngredients = (ingredients) => {
   return {
     type:actionTypes.SET_INGREDIENTS,
-    ingredients: ingredients
+    ingredients: ingredients,
+    totalPrice: 4
   };  
 };
 
