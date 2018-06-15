@@ -38,6 +38,9 @@ class App extends Component {
             path='/orders'
             component={Orders} />
           <Route 
+            path='/auth'
+            component={Auth} />
+          <Route 
             path='/logout'
             component={Logout} />
           <Route 
